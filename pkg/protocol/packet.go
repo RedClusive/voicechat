@@ -15,3 +15,11 @@ type Packet struct {
 }
 
 const HeadeSize = 9
+
+const (
+	InitPacket          = 0
+	DataPacket          = 1
+	EndPacket           = 2
+	HandshakePacket     = 3
+	UserDisconectPacket = 4
+)

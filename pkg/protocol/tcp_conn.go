@@ -86,17 +86,18 @@ type TCPConn struct {
 	Room string
 }
 
-func (c *TCPConn) Run(ctx context.Context, input <-chan *voiceio.Chunk) error {
+func (c *TCPConn) Run(ctx context.Context, input <-chan *voiceio.Chunk, output chan<- *Packet) error {
 	conn, err := net.Dial("tcp", c.Addr)
 	if err != nil {
 		return err
 	}
 
+	br := bufio.NewReader(conn)
 	bw := bufio.NewWriter(conn)
 
 	if err := WritePacket(bw, &Packet{
 		Header: Header{
-			Type:       4, // handshake
+			Type:       HandshakePacket,
 			Length:     uint32(len(c.Room)),
 			LengthUser: uint32(len(c.User)),
 		},
@@ -110,6 +111,10 @@ func (c *TCPConn) Run(ctx context.Context, input <-chan *voiceio.Chunk) error {
 
 	group.Go(func() error {
 		return c.SendLoop(ctx, input, bw)
+	})
+
+	group.Go(func() error {
+		return c.ReceiveLoop(ctx, br, output)
 	})
 
 	return group.Wait()
