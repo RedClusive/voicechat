@@ -2,7 +2,7 @@
 
 ## Feature list:
 - Rooms
-- User list
+- Users list
 - Speakers highlighting
 - i/o as pre-recorded audio files
 
