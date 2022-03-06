@@ -146,6 +146,10 @@ func run(ctx context.Context, config *clientConfig) error {
 		return runSendPipeline(ctx, connInput)
 	})
 
+	group.Go(func() error {
+		return runReceivePipeline(ctx, connOutput)
+	})
+
 	return group.Wait()
 }
 
