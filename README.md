@@ -9,8 +9,8 @@
 ## How to:
 ### Client:
 1) build cmd/client
-2) ```bash ./cmd/client "user_name" "server_addr" "room_tag" ```
-3)  ```bash voice message.wav ```
+2) ``` ./cmd/client "user_name" "server_addr" "room_tag" ```
+3)  ``` voice message.wav ```
 
 ### Server:
 todo...
